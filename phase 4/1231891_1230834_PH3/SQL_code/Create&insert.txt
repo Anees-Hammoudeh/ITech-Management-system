@@ -1,0 +1,524 @@
+DROP DATABASE IF EXISTS itech_db;
+CREATE DATABASE itech_db;
+USE itech_db;
+
+-- main tables:
+CREATE TABLE Category (
+    Category_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Category_Name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE Brand (
+    Brand_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Brand_Name VARCHAR(100) NOT NULL UNIQUE,
+    Website VARCHAR(200)
+);
+
+CREATE TABLE Supplier (
+    Supplier_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Contact_Name VARCHAR(100) NOT NULL,
+    Company_Name VARCHAR(100) NOT NULL,
+    Address VARCHAR(200)
+);
+
+CREATE TABLE Customer (
+    Customer_ID INT AUTO_INCREMENT PRIMARY KEY,
+    First_Name VARCHAR(50) NOT NULL,
+    Last_Name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Employee (
+    Employee_ID INT AUTO_INCREMENT PRIMARY KEY,
+    First_Name VARCHAR(50) NOT NULL,
+    Last_Name VARCHAR(50) NOT NULL,
+    Position VARCHAR(50) NOT NULL,
+    Salary DECIMAL(10,2) NOT NULL CHECK (Salary >=0),
+    Supervisor_ID INT,
+    FOREIGN KEY (Supervisor_ID)
+    REFERENCES Employee(Employee_ID)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE Storage_Section (
+    Section_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Section_Name VARCHAR(100) NOT NULL,
+    Section_Type VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Product (
+    Product_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Product_Name VARCHAR(100) NOT NULL,
+    Model VARCHAR(100),
+    Price DECIMAL(10,2) NOT NULL CHECK (Price >= 0),
+    Category_ID INT NOT NULL,
+    Brand_ID INT NOT NULL,
+    FOREIGN KEY (Category_ID)
+    REFERENCES Category(Category_ID)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE,
+    FOREIGN KEY (Brand_ID)
+    REFERENCES Brand(Brand_ID)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+);
+
+-- multivalued phone tables:
+CREATE TABLE Supplier_Phone (
+    Supplier_ID INT NOT NULL,
+    Phone VARCHAR(20) NOT NULL,
+    PRIMARY KEY (Supplier_ID, Phone),
+    FOREIGN KEY (Supplier_ID)
+    REFERENCES Supplier(Supplier_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE Customer_Phone (
+    Customer_ID INT NOT NULL,
+    Phone VARCHAR(20) NOT NULL,
+    PRIMARY KEY (Customer_ID, Phone),
+    FOREIGN KEY (Customer_ID)
+    REFERENCES Customer(Customer_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE Employee_Phone (
+    Employee_ID INT NOT NULL,
+    Phone VARCHAR(20) NOT NULL,
+    PRIMARY KEY (Employee_ID, Phone),
+    FOREIGN KEY (Employee_ID)
+    REFERENCES Employee(Employee_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+
+-- transaction tables (without derived total attributes):
+
+CREATE TABLE Purchase (
+    Purchase_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Supplier_ID INT NOT NULL,
+    Purchase_Date DATE NOT NULL,
+    Delivery_Date DATE,
+    FOREIGN KEY (Supplier_ID)
+    REFERENCES Supplier(Supplier_ID)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE Sale (
+    Sale_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Customer_ID INT NOT NULL,
+    Sale_Date DATE NOT NULL,
+    FOREIGN KEY (Customer_ID)
+    REFERENCES Customer(Customer_ID)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+);
+
+
+-- Details/Associative tables:
+
+CREATE TABLE Supplier_Product (
+    Supplier_ID INT NOT NULL,
+    Product_ID INT NOT NULL,
+    Supply_Price DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (Supplier_ID, Product_ID),
+    FOREIGN KEY (Supplier_ID)
+    REFERENCES Supplier(Supplier_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (Product_ID)
+    REFERENCES Product(Product_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE Purchase_Details (
+    Purchase_ID INT NOT NULL,
+    Product_ID INT NOT NULL,
+    Unit_Price DECIMAL(10,2) NOT NULL,
+    Quantity INT NOT NULL CHECK (Quantity >= 0),
+    PRIMARY KEY (Purchase_ID, Product_ID),
+    FOREIGN KEY (Purchase_ID)
+    REFERENCES Purchase(Purchase_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (Product_ID)
+    REFERENCES Product(Product_ID)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE Sale_Details (
+    Sale_ID INT NOT NULL,
+    Product_ID INT NOT NULL,
+    Unit_Price DECIMAL(10,2) NOT NULL,
+    Quantity INT NOT NULL,
+    PRIMARY KEY (Sale_ID, Product_ID),
+    FOREIGN KEY (Sale_ID)
+    REFERENCES Sale(Sale_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (Product_ID)
+    REFERENCES Product(Product_ID)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE Storage_Details (
+    Product_ID INT NOT NULL,
+    Section_ID INT NOT NULL,
+    Quantity INT NOT NULL,
+    PRIMARY KEY (Product_ID, Section_ID),
+    FOREIGN KEY (Product_ID)
+    REFERENCES Product(Product_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (Section_ID)
+    REFERENCES Storage_Section(Section_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+-- Warranty/Payment/Return/Stock Movement:
+CREATE TABLE Warranty (
+    Product_ID INT NOT NULL,
+    Warranty_Number VARCHAR(50) NOT NULL UNIQUE,
+    Warranty_Type VARCHAR(100) NOT NULL,
+    Warranty_Period VARCHAR(50) NOT NULL,
+    Start_Date DATE NOT NULL,
+    PRIMARY KEY (Product_ID, Warranty_Number),
+    FOREIGN KEY (Product_ID)
+    REFERENCES Product(Product_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE Payment (
+    Payment_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Sale_ID INT NOT NULL,
+    Amount DECIMAL(10,2) NOT NULL CHECK (Amount >=0),
+    Payment_Method VARCHAR(50) NOT NULL,
+    Payment_Status VARCHAR(50) NOT NULL,
+    Payment_Date DATE NOT NULL,
+    FOREIGN KEY (Sale_ID)
+    REFERENCES Sale(Sale_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE Return_Record (
+    Return_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Sale_ID INT NOT NULL,
+    Product_ID INT NOT NULL,
+    Return_Date DATE NOT NULL,
+    Quantity INT NOT NULL,
+    Return_Reason VARCHAR(200),
+    Return_Status VARCHAR(50) NOT NULL,
+    FOREIGN KEY (Sale_ID, Product_ID)
+    REFERENCES Sale_Details(Sale_ID, Product_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE Stock_Movement_History (
+    Movement_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Product_ID INT NOT NULL,
+    Section_ID INT NOT NULL,
+    Movement_Type VARCHAR(50) NOT NULL,
+    Quantity INT NOT NULL,
+    Movement_Date DATE NOT NULL,
+    FOREIGN KEY (Product_ID)
+    REFERENCES Product(Product_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (Section_ID)
+    REFERENCES Storage_Section(Section_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+-- Insert data:
+INSERT INTO Category (Category_Name) VALUES
+('Smartphone'),
+('Laptop'),
+('Tablet'),
+('Accessory'),
+('Audio'),
+('Gaming');
+
+INSERT INTO Brand (Brand_Name, Website) VALUES
+('Apple', 'https://www.apple.com'),
+('Samsung', 'https://www.samsung.com'),
+('Dell', 'https://www.dell.com'),
+('HP', 'https://www.hp.com'),
+('Lenovo', 'https://www.lenovo.com'),
+('Sony', 'https://www.sony.com'),
+('Logitech', 'https://www.logitech.com'),
+('Asus', 'https://www.asus.com');
+
+INSERT INTO Supplier (Contact_Name, Company_Name, Address) VALUES
+('Ahmad Saleh', 'TechSource Palestine', 'Ramallah - Al Ersal'),
+('Mona Khalil', 'Smart Import Co.', 'Al-Bireh'),
+('Yousef Nasser', 'Digital World Supplies', 'Nablus'),
+('Rana Odeh', 'Future Electronics', 'Hebron');
+
+INSERT INTO Supplier_Phone VALUES
+(1, '0599001122'),
+(1, '022981111'),
+(2, '0599112233'),
+(2, '022982222'),
+(3, '0599223344'),
+(4, '0599334455');
+
+INSERT INTO Customer (First_Name, Last_Name) VALUES
+('Omar', 'Khaled'),
+('Lina', 'Ahmad'),
+('Samer', 'Nassar'),
+('Hiba', 'Saleh'),
+('Tariq', 'Mansour'),
+('Noor', 'Zaid'),
+('Yara', 'Hammad'),
+('Adam', 'Qasem');
+
+INSERT INTO Customer_Phone VALUES
+(1, '0597001111'),
+(2, '0597002222'),
+(3, '0597003333'),
+(4, '0597004444'),
+(5, '0597005555'),
+(6, '0597006666'),
+(7, '0597007777'),
+(8, '0597008888'),
+(1, '022971111');
+
+INSERT INTO Employee (First_Name, Last_Name, Position, Salary, Supervisor_ID) VALUES
+('Khaled', 'Darwish', 'Manager', 2500.00, NULL),
+('Aya', 'Hassan', 'Sales Employee', 1300.00, 1),
+('Rami', 'Qasem', 'Warehouse Employee', 1200.00, 1),
+('Dana', 'Ali', 'Cashier', 1100.00, 1),
+('Mahmoud', 'Nimer', 'Sales Employee', 1250.00, 2),
+('Nour', 'Saleh', 'Accountant', 1400.00, 1);
+
+INSERT INTO Employee_Phone VALUES
+(1, '0598001111'),
+(2, '0598002222'),
+(3, '0598003333'),
+(4, '0598004444'),
+(5, '0598005555'),
+(6, '0598006666'),
+(1, '022981234');
+
+INSERT INTO Storage_Section (Section_Name, Section_Type) VALUES
+('Front Showroom A', 'Showroom'),
+('Front Showroom B', 'Showroom'),
+('Backroom Storage 1', 'Backroom'),
+('Backroom Storage 2', 'Backroom'),
+('Accessories Shelf', 'Showroom'),
+('Repair Waiting Shelf', 'Service Area');
+
+INSERT INTO Product (Product_Name, Model, Price, Category_ID, Brand_ID) VALUES
+('iPhone 15', 'A3090', 950.00, 1, 1),
+('Samsung Galaxy S24', 'SM-S921', 820.00, 1, 2),
+('Samsung Galaxy A55', 'SM-A556', 380.00, 1, 2),
+('Dell Inspiron 15', '3520', 650.00, 2, 3),
+('HP Pavilion 14', '14-dv2000', 720.00, 2, 4),
+('Lenovo IdeaPad 3', '15IAU7', 580.00, 2, 5),
+('iPad 10th Gen', 'A2696', 470.00, 3, 1),
+('Logitech Wireless Mouse', 'M185', 18.00, 4, 7),
+('Logitech Keyboard', 'K380', 42.00, 4, 7),
+('Sony WH-CH720N Headphones', 'WH-CH720N', 120.00, 5, 6),
+('Samsung Galaxy Buds FE', 'SM-R400', 75.00, 5, 2),
+('Asus ROG Gaming Laptop', 'G16', 1450.00, 6, 8),
+('Apple USB-C Charger', '20W', 25.00, 4, 1),
+('Samsung Fast Charger', '25W', 20.00, 4, 2),
+('Logitech Webcam', 'C920', 85.00, 4, 7),
+('Dell Gaming Mouse', 'GM500', 35.00, 4, 3),
+('HP USB Flash Drive', '64GB', 12.00, 4, 4),
+('Lenovo Tab M10', 'TB328FU', 210.00, 3, 5);
+
+INSERT INTO Supplier_Product VALUES
+(1, 1, 850.00),
+(1, 7, 400.00),
+(1, 13, 18.00),
+(2, 2, 730.00),
+(2, 3, 310.00),
+(2, 11, 55.00),
+(2, 14, 14.00),
+(3, 4, 560.00),
+(3, 5, 620.00),
+(3, 6, 500.00),
+(3, 12, 1280.00),
+(3, 16, 25.00),
+(3, 17, 7.00),
+(4, 8, 10.00),
+(4, 9, 30.00),
+(4, 10, 90.00),
+(4, 15, 62.00),
+(4, 18, 160.00);
+
+INSERT INTO Purchase (Supplier_ID, Purchase_Date, Delivery_Date) VALUES
+(1, '2026-04-01', '2026-04-03'),
+(2, '2026-04-05', '2026-04-07'),
+(3, '2026-04-10', '2026-04-12'),
+(4, '2026-04-15', '2026-04-16'),
+(2, '2026-04-20', '2026-04-22'),
+(3, '2026-04-25', '2026-04-27');
+
+INSERT INTO Purchase_Details VALUES
+(1, 1, 850.00, 8),
+(1, 7, 400.00, 6),
+(1, 13, 18.00, 30),
+(2, 2, 730.00, 7),
+(2, 3, 310.00, 10),
+(2, 11, 55.00, 20),
+(2, 14, 14.00, 25),
+(3, 4, 560.00, 6),
+(3, 5, 620.00, 5),
+(3, 6, 500.00, 7),
+(3, 12, 1280.00, 3),
+(4, 8, 10.00, 40),
+(4, 9, 30.00, 25),
+(4, 10, 90.00, 12),
+(4, 15, 62.00, 10),
+(5, 2, 730.00, 4),
+(5, 11, 55.00, 15),
+(6, 16, 25.00, 20),
+(6, 17, 7.00, 50),
+(6, 18, 160.00, 8);
+
+INSERT INTO Storage_Details VALUES
+(1, 1, 3),
+(1, 3, 5),
+(2, 1, 4),
+(2, 3, 7),
+(3, 1, 5),
+(3, 3, 5),
+(4, 2, 2),
+(4, 4, 4),
+(5, 2, 2),
+(5, 4, 3),
+(6, 2, 3),
+(6, 4, 4),
+(7, 1, 2),
+(7, 3, 4),
+(8, 5, 30),
+(9, 5, 20),
+(10, 2, 5),
+(10, 4, 7),
+(11, 5, 25),
+(12, 2, 1),
+(12, 4, 2),
+(13, 5, 25),
+(14, 5, 22),
+(15, 5, 8),
+(16, 5, 18),
+(17, 5, 45),
+(18, 1, 3),
+(18, 3, 5);
+
+INSERT INTO Sale (Customer_ID, Sale_Date) VALUES
+(1, '2026-04-18'),
+(2, '2026-04-18'),
+(3, '2026-04-19'),
+(4, '2026-04-20'),
+(5, '2026-04-21'),
+(6, '2026-04-22'),
+(1, '2026-04-23'),
+(7, '2026-04-24'),
+(8, '2026-04-25'),
+(3, '2026-04-26');
+
+INSERT INTO Sale_Details VALUES
+(1, 1, 950.00, 1),
+(1, 13, 25.00, 1),
+(2, 2, 820.00, 1),
+(2, 11, 75.00, 1),
+(3, 4, 650.00, 1),
+(3, 8, 18.00, 2),
+(4, 10, 120.00, 1),
+(4, 9, 42.00, 1),
+(5, 12, 1450.00, 1),
+(5, 15, 85.00, 1),
+(6, 3, 380.00, 1),
+(6, 14, 20.00, 2),
+(7, 7, 470.00, 1),
+(7, 13, 25.00, 2),
+(8, 18, 210.00, 1),
+(8, 17, 12.00, 2),
+(9, 5, 720.00, 1),
+(9, 16, 35.00, 1),
+(10, 11, 75.00, 2),
+(10, 8, 18.00, 1);
+
+INSERT INTO Payment (Sale_ID, Amount, Payment_Method, Payment_Status, Payment_Date) VALUES
+(1, 975.00, 'Cash', 'Paid', '2026-04-18'),
+(2, 500.00, 'Installment', 'Partial', '2026-04-18'),
+(2, 395.00, 'Installment', 'Pending', '2026-05-18'),
+(3, 686.00, 'Credit Card', 'Paid', '2026-04-19'),
+(4, 162.00, 'Cash', 'Paid', '2026-04-20'),
+(5, 800.00, 'Installment', 'Partial', '2026-04-21'),
+(5, 735.00, 'Installment', 'Pending', '2026-05-21'),
+(6, 420.00, 'Cash', 'Paid', '2026-04-22'),
+(7, 520.00, 'Credit Card', 'Paid', '2026-04-23'),
+(8, 234.00, 'Cash', 'Paid', '2026-04-24'),
+(9, 400.00, 'Installment', 'Partial', '2026-04-25'),
+(9, 355.00, 'Installment', 'Pending', '2026-05-25'),
+(10, 168.00, 'Cash', 'Paid', '2026-04-26');
+
+
+INSERT INTO Warranty VALUES
+(1, 'W-IPH15-001', 'Manufacturer Warranty', '12 Months', '2026-04-01'),
+(2, 'W-S24-001', 'Manufacturer Warranty', '12 Months', '2026-04-05'),
+(3, 'W-A55-001', 'Manufacturer Warranty', '12 Months', '2026-04-05'),
+(4, 'W-DELL-001', 'Store + Manufacturer Warranty', '24 Months', '2026-04-10'),
+(5, 'W-HP-001', 'Manufacturer Warranty', '24 Months', '2026-04-10'),
+(6, 'W-LEN-001', 'Manufacturer Warranty', '12 Months', '2026-04-10'),
+(7, 'W-IPAD-001', 'Manufacturer Warranty', '12 Months', '2026-04-01'),
+(10, 'W-SONY-001', 'Manufacturer Warranty', '6 Months', '2026-04-15'),
+(12, 'W-ASUS-001', 'Manufacturer Warranty', '24 Months', '2026-04-10'),
+(15, 'W-CAM-001', 'Store Warranty', '6 Months', '2026-04-15'),
+(18, 'W-LENTAB-001', 'Manufacturer Warranty', '12 Months', '2026-04-25');
+
+INSERT INTO Return_Record 
+(Sale_ID, Product_ID, Return_Date, Quantity, Return_Reason, Return_Status) VALUES
+(3, 8, '2026-04-21', 1, 'Customer reported connection issue', 'Approved'),
+(6, 14, '2026-04-24', 1, 'Wrong charger type', 'Pending'),
+(10, 11, '2026-04-28', 1, 'Audio issue', 'Approved');
+
+INSERT INTO Stock_Movement_History 
+(Product_ID, Section_ID, Movement_Type, Quantity, Movement_Date) VALUES
+(1, 3, 'Purchase', 8, '2026-04-03'),
+(7, 3, 'Purchase', 6, '2026-04-03'),
+(13, 5, 'Purchase', 30, '2026-04-03'),
+(2, 3, 'Purchase', 7, '2026-04-07'),
+(3, 3, 'Purchase', 10, '2026-04-07'),
+(11, 5, 'Purchase', 20, '2026-04-07'),
+(14, 5, 'Purchase', 25, '2026-04-07'),
+(4, 4, 'Purchase', 6, '2026-04-12'),
+(5, 4, 'Purchase', 5, '2026-04-12'),
+(6, 4, 'Purchase', 7, '2026-04-12'),
+(12, 4, 'Purchase', 3, '2026-04-12'),
+(8, 5, 'Purchase', 40, '2026-04-16'),
+(9, 5, 'Purchase', 25, '2026-04-16'),
+(10, 4, 'Purchase', 12, '2026-04-16'),
+(15, 5, 'Purchase', 10, '2026-04-16'),
+(1, 1, 'Sale', 1, '2026-04-18'),
+(13, 5, 'Sale', 1, '2026-04-18'),
+(2, 1, 'Sale', 1, '2026-04-18'),
+(11, 5, 'Sale', 1, '2026-04-18'),
+(4, 2, 'Sale', 1, '2026-04-19'),
+(8, 5, 'Sale', 2, '2026-04-19'),
+(10, 2, 'Sale', 1, '2026-04-20'),
+(9, 5, 'Sale', 1, '2026-04-20'),
+(12, 2, 'Sale', 1, '2026-04-21'),
+(15, 5, 'Sale', 1, '2026-04-21'),
+(8, 5, 'Return', 1, '2026-04-21'),
+(14, 5, 'Return', 1, '2026-04-24'),
+(11, 5, 'Return', 1, '2026-04-28'),
+(16, 5, 'Purchase', 20, '2026-04-27'),
+(17, 5, 'Purchase', 50, '2026-04-27'),
+(18, 3, 'Purchase', 8, '2026-04-27');

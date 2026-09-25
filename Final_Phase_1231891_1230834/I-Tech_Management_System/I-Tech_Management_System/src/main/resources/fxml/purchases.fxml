@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane style="-fx-background-color:#f0f0f0; -fx-font-family:'Segoe UI';" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.itech_management_system.PurchaseController">
+    <top>
+        <HBox spacing="0" style="-fx-background-color:#3a3a3a; -fx-padding:0 20 0 20; -fx-alignment:CENTER_LEFT; -fx-min-height:48px; -fx-pref-height:48px;">
+            <Label style="-fx-text-fill:white; -fx-font-size:18px; -fx-font-weight:bold; -fx-padding:0 28 0 0;" text="I-Tech" />
+            <Button onAction="#openDashboard" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Dashboard" />
+            <Button onAction="#openProducts" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Products" />
+            <Button onAction="#openCustomers" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Customers" />
+            <Button onAction="#openSuppliers" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Suppliers" />
+            <Button onAction="#openEmployees" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Employees" />
+            <Button onAction="#openInventory" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Inventory" />
+            <Button onAction="#openSales" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Sales" />
+            <Button style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:white; -fx-font-weight:bold; -fx-border-color:transparent transparent #888888 transparent; -fx-border-width:0 0 3 0;" text="Purchases" />
+            <Button onAction="#openReports" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Reports" />
+        </HBox>
+    </top>
+
+    <center>
+    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+        <VBox spacing="18" style="-fx-padding: 30;">
+            <VBox>
+                <Label style="-fx-text-fill: #222222; -fx-font-size: 30px; -fx-font-weight: bold;" text="Purchases Management" />
+            </VBox>
+
+            <HBox spacing="14">
+                <VBox prefWidth="220" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;"><Label fx:id="totalPurchasesLabel" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="0" /><Label style="-fx-text-fill: #555555;" text="Total Purchases" /></VBox>
+                <VBox prefWidth="220" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;"><Label fx:id="costLabel" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="0.00" /><Label style="-fx-text-fill: #555555;" text="Total Cost" /></VBox>
+                <VBox prefWidth="220" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;"><Label fx:id="itemsLabel" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #3a3a3a;" text="0" /><Label style="-fx-text-fill: #555555;" text="Purchased Items" /></VBox>
+            </HBox>
+
+            <HBox spacing="18">
+                <VBox prefWidth="350" spacing="10" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:20;">
+                    <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Create Purchase" />
+                    <Label text="Supplier" /><ComboBox fx:id="supplierBox" prefWidth="310" promptText="Choose supplier" />
+                    <Label text="Employee" /><ComboBox fx:id="employeeBox" prefWidth="310" promptText="Choose employee" />
+                    <Label text="Purchase Date" /><DatePicker fx:id="purchaseDatePicker" prefWidth="310" />
+                    <Label text="Delivery Date" /><DatePicker fx:id="deliveryDatePicker" prefWidth="310" />
+                    <HBox spacing="8">
+                        <Button onAction="#createPurchase" prefWidth="150" style="-fx-background-color: #e8e8e8; -fx-text-fill: #333333; -fx-font-weight: bold;" text="Create Purchase" />
+                        <Button onAction="#finishPurchase" prefWidth="150" style="-fx-background-color: #e8e8e8; -fx-text-fill: #3a3a3a; -fx-font-weight: bold;" text="Finish" />
+                    </HBox>
+                    <Label fx:id="currentPurchaseLabel" style="-fx-text-fill: #555555; -fx-font-weight: bold;" text="Current Purchase ID: none" />
+                    <Button onAction="#markAsReceived" prefWidth="310" style="-fx-background-color:#3a3a3a; -fx-text-fill:white; -fx-font-weight:bold;" text="Mark as Received" />
+                    <Separator />
+                    <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Add Item to Purchase" />
+                    <Label text="Product" /><ComboBox fx:id="productBox" prefWidth="310" promptText="Choose product" />
+                    <Label text="Quantity" /><TextField fx:id="quantityField" promptText="Quantity" />
+                    <Label text="Storage Section" /><ComboBox fx:id="sectionBox" prefWidth="310" promptText="Choose a section with enough capacity" />
+                    <Label fx:id="sectionCapacityLabel" style="-fx-text-fill:#666666;" text="Choose a product and enter quantity" wrapText="true" />
+                    <Label text="Unit Price" /><TextField fx:id="unitPriceField" promptText="Purchase unit price" />
+                    <GridPane hgap="8" vgap="8">
+                        <Button onAction="#addItem" prefWidth="150" style="-fx-background-color: #e8e8e8; -fx-text-fill: #333333; -fx-font-weight: bold;" text="Save Item" GridPane.columnIndex="0" />
+                        <Button onAction="#deleteItem" prefWidth="150" style="-fx-background-color: #e8e8e8; -fx-text-fill: #333333; -fx-font-weight: bold;" text="Delete Item" GridPane.columnIndex="1" />
+                        <Button onAction="#clearFields" prefWidth="310" style="-fx-background-color: #e8e8e8; -fx-text-fill: #555555; -fx-font-weight: bold;" text="Clear" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                     <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
+                    </GridPane>
+                    <Label fx:id="messageLabel" style="-fx-text-fill: #3a3a3a; -fx-font-weight: bold;" />
+                </VBox>
+
+                <VBox spacing="18" HBox.hgrow="ALWAYS">
+                    <VBox spacing="10" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:20;">
+                        <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Purchases" />
+                        <HBox spacing="10"><TextField fx:id="searchField" prefWidth="330" promptText="Search by ID, supplier, or employee" /><Button onAction="#searchPurchases" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold;" text="Search" /><Button onAction="#loadPurchases" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold;" text="Show All" /></HBox>
+                        <TableView fx:id="purchaseTable" prefHeight="300">
+                            <columns>
+                                <TableColumn fx:id="purchaseIdCol" prefWidth="70" text="ID" />
+                                <TableColumn fx:id="supplierCol" prefWidth="190" text="Supplier" />
+                                <TableColumn fx:id="employeeCol" prefWidth="170" text="Employee" />
+                                <TableColumn fx:id="purchaseDateCol" prefWidth="130" text="Purchase Date" />
+                                <TableColumn fx:id="deliveryDateCol" prefWidth="130" text="Delivery Date" />
+                                <TableColumn fx:id="statusCol" prefWidth="100" text="Status" />
+                                <TableColumn fx:id="totalCol" prefWidth="120" text="Total" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+                    <VBox spacing="10" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:20;">
+                        <HBox spacing="10"><Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Purchase Details" /><Label fx:id="detailsTitleLabel" style="-fx-text-fill: #555555; -fx-padding: 6 0 0 0;" text="Select a purchase to show its items" /></HBox>
+                        <TableView fx:id="detailTable" prefHeight="260">
+                            <columns>
+                                <TableColumn fx:id="detailPurchaseIdCol" prefWidth="100" text="Purchase ID" />
+                                <TableColumn fx:id="detailProductIdCol" prefWidth="90" text="Product ID" />
+                                <TableColumn fx:id="detailProductCol" prefWidth="260" text="Product" />
+                                <TableColumn fx:id="detailSectionCol" prefWidth="140" text="Section" />
+                                <TableColumn fx:id="detailQuantityCol" prefWidth="90" text="Quantity" />
+                                <TableColumn fx:id="detailUnitPriceCol" prefWidth="110" text="Unit Price" />
+                                <TableColumn fx:id="detailLineTotalCol" prefWidth="120" text="Line Total" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </ScrollPane>
+</center>
+</BorderPane>

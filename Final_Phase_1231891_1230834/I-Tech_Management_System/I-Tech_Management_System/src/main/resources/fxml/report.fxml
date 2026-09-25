@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.itech_management_system.ReportController" style="-fx-background-color: #f0f0f0; -fx-font-family: 'Segoe UI';">
+
+    <top>
+        <HBox style="-fx-background-color: #3a3a3a; -fx-padding: 0 20 0 20; -fx-alignment: CENTER_LEFT; -fx-min-height: 48px; -fx-pref-height: 48px;">
+            <Label text="I-Tech" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-padding: 0 28 0 0;"/>
+            <Button text="Dashboard" onAction="#openDashboard" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Products" onAction="#openProducts" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Customers" onAction="#openCustomers" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Suppliers" onAction="#openSuppliers" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Employees" onAction="#openEmployees" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Inventory" onAction="#openInventory" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Sales" onAction="#openSales" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Purchases" onAction="#openPurchases" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Reports" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 14 12 10 12; -fx-border-color: transparent transparent #888888 transparent; -fx-border-width: 0 0 3 0;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="18" style="-fx-padding: 28;">
+
+                <HBox alignment="CENTER"><Label text="Reports" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+
+                <HBox spacing="18">
+
+                    <ScrollPane prefWidth="350" prefHeight="700" fitToWidth="true" style="-fx-background-color: white; -fx-background: white; -fx-border-color: #dddddd; -fx-border-radius: 14; -fx-background-radius: 14;">
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 14;">
+
+                            <HBox alignment="CENTER"><Label text="Product Reports" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                            <Button text="Never Sold Products" onAction="#showNeverSoldProducts" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Products per Category Chart" onAction="#showProductsPerCategoryChart" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Best Selling Products" onAction="#showBestSellingProducts" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Separator/>
+                            <HBox alignment="CENTER"><Label text="Customer Reports" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                            <Button text="Never Bought Customers" onAction="#showNeverBoughtCustomers" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Top Customers by Purchases" onAction="#showTopCustomersReport" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Label text="From Date" style="-fx-text-fill: #555555;"/>
+                            <DatePicker fx:id="fromDatePicker" prefWidth="310"/>
+                            <Label text="To Date" style="-fx-text-fill: #555555;"/>
+                            <DatePicker fx:id="toDatePicker" prefWidth="310"/>
+                            <Button text="Customer Sales Summary" onAction="#showCustomerSalesPeriod" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Profit by Period" onAction="#showProfitByPeriod" prefWidth="310" style="-fx-background-color: #e8e8e8; -fx-text-fill: #555555; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Separator/>
+                            <HBox alignment="CENTER"><Label text="Supplier Reports" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                            <Button text="Most Supplied Product" onAction="#showMostSuppliedProduct" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Top Suppliers by Value" onAction="#showTopSuppliersReport" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Products per Supplier" onAction="#showProductsPerSupplierReport" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Purchase vs Sale Price" onAction="#showPurchaseVsSalePrice" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Separator/>
+                            <HBox alignment="CENTER"><Label text="Employee Reports" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                            <Button text="Top Employees by Sales" onAction="#showTopEmployeesSales" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Salary per Position Chart" onAction="#showSalaryPerPosition" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Separator/>
+                            <HBox alignment="CENTER"><Label text="Inventory Reports" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                            <Button text="Total Inventory Value" onAction="#showTotalInventoryValue" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Empty Storage Sections" onAction="#showEmptyStorageSections" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Separator/>
+                            <HBox alignment="CENTER"><Label text="Sales Reports" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                            <Button text="Top 10 Sales Chart" onAction="#showTop10Sales" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Warranty Expiry Overview" onAction="#showWarrantyExpiry" prefWidth="310" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+
+                        </VBox>
+                    </ScrollPane>
+                    <VBox spacing="15" HBox.hgrow="ALWAYS">
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 20; -fx-border-color: #dddddd; -fx-border-radius: 14; -fx-border-width: 0.5;">
+                            <HBox alignment="CENTER"><Label fx:id="titleLabel" text="Report Result" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                            <Label fx:id="messageLabel" text="" style="-fx-text-fill: #555555; -fx-font-weight: bold;"/>
+                            <TableView fx:id="reportTable" prefHeight="340">
+                                <columns>
+                                    <TableColumn fx:id="col1" text="Column 1" prefWidth="130"/>
+                                    <TableColumn fx:id="col2" text="Column 2" prefWidth="190"/>
+                                    <TableColumn fx:id="col3" text="Column 3" prefWidth="190"/>
+                                    <TableColumn fx:id="col4" text="Column 4" prefWidth="150"/>
+                                    <TableColumn fx:id="col5" text="Column 5" prefWidth="150"/>
+                                    <TableColumn fx:id="col6" text="Column 6" prefWidth="120"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 20; -fx-border-color: #dddddd; -fx-border-radius: 14; -fx-border-width: 0.5;">
+                            <HBox alignment="CENTER"><Label text="Chart" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                            <VBox fx:id="chartBox" prefHeight="350"/>
+                        </VBox>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

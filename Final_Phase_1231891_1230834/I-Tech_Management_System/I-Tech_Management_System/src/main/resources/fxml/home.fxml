@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane style="-fx-background-color:#f0f0f0; -fx-font-family:'Segoe UI';" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.itech_management_system.HomeController">
+    <top>
+        <HBox spacing="0" style="-fx-background-color:#3a3a3a; -fx-padding:0 20 0 20; -fx-alignment:CENTER_LEFT; -fx-min-height:48px; -fx-pref-height:48px;">
+            <Label style="-fx-text-fill:white; -fx-font-size:18px; -fx-font-weight:bold; -fx-padding:0 28 0 0;" text="I-Tech" />
+            <Button style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:white; -fx-font-weight:bold; -fx-border-color:transparent transparent #888888 transparent; -fx-border-width:0 0 3 0;" text="Dashboard" />
+            <Button onAction="#openProducts" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Products" />
+            <Button onAction="#openCustomers" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Customers" />
+            <Button onAction="#openSuppliers" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Suppliers" />
+            <Button onAction="#openEmployees" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Employees" />
+            <Button onAction="#openInventory" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Inventory" />
+            <Button onAction="#openSales" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Sales" />
+            <Button onAction="#openPurchases" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Purchases" />
+            <Button onAction="#openReports" style="-fx-background-color:transparent; -fx-font-size:12px; -fx-padding:14 12 10 12; -fx-text-fill:#bdbdbd;" text="Reports" />
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="18" style="-fx-padding: 30;">
+                  <Label style="-fx-text-fill: #777777;" text="Welcome to ITech management system" />
+
+                <HBox>
+                    <VBox>
+                        <Label style="-fx-text-fill: #555555;" />
+                    </VBox>
+                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" style="-fx-text-fill: #222222; -fx-font-size: 30px; -fx-font-weight: bold;" text="Dashboard" />
+                </HBox>
+
+                <HBox spacing="14">
+                    <VBox prefWidth="190" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                        <Label style="-fx-text-fill: #555555;" text="Products" />
+                        <Label fx:id="productsCountLabel" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="0" />
+                    </VBox>
+                    <VBox prefWidth="190" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                        <Label style="-fx-text-fill: #555555;" text="Customers" />
+                        <Label fx:id="customersCountLabel" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="0" />
+                    </VBox>
+                    <VBox prefWidth="190" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                        <Label style="-fx-text-fill: #555555;" text="Suppliers" />
+                        <Label fx:id="suppliersCountLabel" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="0" />
+                    </VBox>
+                    <VBox prefWidth="190" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                        <Label style="-fx-text-fill: #555555;" text="Total Sales" />
+                        <Label fx:id="salesCountLabel" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="0" />
+                    </VBox>
+                    <VBox prefWidth="190" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                        <Label style="-fx-text-fill: #555555;" text="Purchases" />
+                        <Label fx:id="purchasesCountLabel" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="0" />
+                    </VBox>
+                    <VBox prefWidth="190" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                        <Label style="-fx-text-fill: #555555;" text="Revenue" />
+                        <Label fx:id="revenueLabel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="0.00" />
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="14">
+                    <VBox prefWidth="235" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                        <Label fx:id="totalStockLabel" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="Total Stock: 0" />
+                    </VBox>
+                    <VBox prefWidth="235" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                        <Label fx:id="pendingPaymentsLabel" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Pending Payments: 0" />
+                    </VBox>
+                    <VBox prefWidth="235" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                        <Label fx:id="returnsLabel" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Returns: 0" />
+                    </VBox>
+                    <VBox prefWidth="235" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                        <Label fx:id="lowStockLabel" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Low Stock Products: 0" />
+                    </VBox>
+                    <VBox prefWidth="235" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                        <Label fx:id="employeesLabel" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="Employees: 0" />
+                    </VBox>
+                </HBox>
+
+                <VBox prefHeight="130.0" prefWidth="212.0" spacing="8" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:18;">
+                    <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="Alerts" />
+                    <Label fx:id="alertOneLabel" style="-fx-text-fill: #333333; -fx-font-weight: bold;" text="• Pending payments: 0" />
+                    <Label fx:id="alertTwoLabel" style="-fx-text-fill: #333333; -fx-font-weight: bold;" text="• Low stock records: 0" />
+                    <Label fx:id="alertThreeLabel" style="-fx-text-fill: #555555;" text="• Total items in warehouse: 0" />
+                </VBox>
+
+                <!-- this month charts section -->
+                <HBox spacing="18">
+
+                    <VBox prefHeight="400.0" prefWidth="390" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:20;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-size: 14px; -fx-text-fill:#777777;" text="Sales This Month" />
+                        <Label fx:id="monthSalesLabel" style="-fx-font-size: 28px; -fx-font-weight:bold; -fx-text-fill:#222222;" text="0" />
+                  <Label layoutX="31.0" layoutY="31.0" style="-fx-font-size: 14px; -fx-text-fill:#777777;" text="Sales last 6 months" />
+                        <LineChart fx:id="monthSalesChart" animated="false" createSymbols="true" legendVisible="false" prefHeight="259.0" prefWidth="357.0" style="-fx-padding: 0;">
+                            <xAxis>
+                                <CategoryAxis fx:id="salesChartDayAxis" tickLabelGap="2" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="salesChartValueAxis" minorTickVisible="false" />
+                            </yAxis>
+                        </LineChart>
+                    </VBox>
+
+                    <VBox prefWidth="390" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:20;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-size: 14px; -fx-text-fill:#777777;" text="Revenue This Month" />
+                        <Label fx:id="monthRevenueLabel" style="-fx-font-size: 28px; -fx-font-weight:bold; -fx-text-fill:#222222;" text="0.00" />
+                  <Label layoutX="31.0" layoutY="31.0" style="-fx-font-size: 14px; -fx-text-fill:#777777;" text="Revenue last 6 months" />
+                        <LineChart fx:id="monthRevenueChart" animated="false" createSymbols="true" legendVisible="false" prefHeight="262.0" prefWidth="356.0" style="-fx-padding: 0;">
+                            <xAxis>
+                                <CategoryAxis fx:id="revenueChartDayAxis" tickLabelGap="2" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="revenueChartValueAxis" minorTickVisible="false" />
+                            </yAxis>
+                        </LineChart>
+                    </VBox>
+
+                    <VBox prefWidth="390" spacing="6" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:20;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-size: 14px; -fx-text-fill:#777777;" text="Profit This Month" />
+                        <Label fx:id="monthProfitLabel" style="-fx-font-size: 28px; -fx-font-weight:bold; -fx-text-fill:#3a3a3a;" text="0.00" />
+                  <Label layoutX="31.0" layoutY="31.0" style="-fx-font-size: 14px; -fx-text-fill:#777777;" text="Profit last 6 months" />
+                        <LineChart fx:id="monthProfitChart" animated="false" createSymbols="true" legendVisible="false" prefHeight="262.0" prefWidth="356.0" style="-fx-padding: 0;">
+                            <xAxis>
+                                <CategoryAxis fx:id="profitChartDayAxis" tickLabelGap="2" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="profitChartValueAxis" minorTickVisible="false" />
+                            </yAxis>
+                        </LineChart>
+                    </VBox>
+
+                </HBox>
+
+                <HBox spacing="18">
+
+                    <VBox spacing="10" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:20;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Recent Sales" />
+                        <TableView fx:id="recentSalesTable" prefHeight="250">
+                            <columns>
+                                <TableColumn fx:id="saleIdColumn" prefWidth="89.0" text="ID" />
+                                <TableColumn fx:id="saleCustomerColumn" prefWidth="300.0" text="Customer" />
+                                <TableColumn fx:id="saleEmployeeColumn" prefWidth="226.0" text="Employee" />
+                                <TableColumn fx:id="saleDateColumn" prefWidth="126.0" text="Date" />
+                                <TableColumn fx:id="saleTotalColumn" prefWidth="159.0" text="Total" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+
+                </HBox>
+
+                <HBox spacing="18">
+
+                    <VBox prefHeight="0.0" prefWidth="0.0" spacing="10" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:20;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Top Products" />
+                        <TableView fx:id="topProductsTable" maxWidth="667.0" prefHeight="230">
+                            <columns>
+                                <TableColumn fx:id="topProductColumn" prefWidth="260" text="Product" />
+                                <TableColumn fx:id="topSoldColumn" prefWidth="138.0" text="Sold Qty" />
+                                <TableColumn fx:id="topRevenueColumn" prefWidth="230.0" text="Revenue" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+
+                    <VBox prefWidth="430" spacing="10" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#dddddd; -fx-border-radius:14; -fx-border-width:0.5; -fx-padding:20;">
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Pending Payments" />
+                        <TableView fx:id="paymentsTable" maxWidth="450.0" minWidth="500.0" prefHeight="230.0" prefWidth="450.0">
+                            <columns>
+                                <TableColumn fx:id="paymentSaleColumn" prefWidth="80" text="Sale ID" />
+                                <TableColumn fx:id="paymentAmountColumn" prefWidth="132.0" text="Amount" />
+                                <TableColumn fx:id="paymentMethodColumn" prefWidth="132.0" text="Method" />
+                                <TableColumn fx:id="paymentDateColumn" prefWidth="155.0" text="Date" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

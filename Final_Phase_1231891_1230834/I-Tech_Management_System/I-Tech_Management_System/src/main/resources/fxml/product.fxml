@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.itech_management_system.ProductController" style="-fx-background-color: #f0f0f0; -fx-font-family: 'Segoe UI';">
+
+    <top>
+        <HBox style="-fx-background-color: #3a3a3a; -fx-padding: 0 20 0 20; -fx-alignment: CENTER_LEFT; -fx-min-height: 48px; -fx-pref-height: 48px;">
+            <Label text="I-Tech" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-padding: 0 28 0 0;"/>
+            <Button text="Dashboard" onAction="#openDashboard" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Products" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 14 12 10 12; -fx-border-color: transparent transparent #888888 transparent; -fx-border-width: 0 0 3 0;"/>
+            <Button text="Customers" onAction="#openCustomers" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Suppliers" onAction="#openSuppliers" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Employees" onAction="#openEmployees" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Inventory" onAction="#openInventory" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Sales" onAction="#openSales" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Purchases" onAction="#openPurchases" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+            <Button text="Reports" onAction="#openReports" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 12px; -fx-padding: 14 12 12 12; -fx-cursor: hand;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="18" style="-fx-padding: 28;">
+
+                <HBox alignment="CENTER"><Label text="Product Management" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+
+                <HBox spacing="18">
+                    <VBox spacing="10" prefWidth="330" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 20; -fx-border-color: #dddddd; -fx-border-radius: 14; -fx-border-width: 0.5;">
+                        <HBox alignment="CENTER"><Label text="Product Data" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                        <Label text="Product ID" style="-fx-text-fill: #555555;"/>
+                        <TextField fx:id="idField" promptText="for update/delete" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Label text="Product Name" style="-fx-text-fill: #555555;"/>
+                        <TextField fx:id="nameField" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Label text="Model" style="-fx-text-fill: #555555;"/>
+                        <TextField fx:id="modelField" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Label text="Price" style="-fx-text-fill: #555555;"/>
+                        <TextField fx:id="priceField" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Label text="Category ID" style="-fx-text-fill: #555555;"/>
+                        <TextField fx:id="categoryIdField" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Label text="Brand ID" style="-fx-text-fill: #555555;"/>
+                        <TextField fx:id="brandIdField" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <GridPane hgap="8" vgap="8">
+                            <Button text="Add" onAction="#doSave" prefWidth="145" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Update" onAction="#doUpdate" prefWidth="145" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Delete" onAction="#doDelete" prefWidth="145" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Clear" onAction="#clearFields" prefWidth="145" GridPane.rowIndex="1" GridPane.columnIndex="1" style="-fx-background-color: #e8e8e8; -fx-text-fill: #555555; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                        </GridPane>
+                        <Label fx:id="messageLabel" style="-fx-text-fill: #555555; -fx-font-weight: bold;"/>
+                    </VBox>
+
+                    <VBox spacing="10" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 20; -fx-border-color: #dddddd; -fx-border-radius: 14; -fx-border-width: 0.5;">
+                        <HBox spacing="10">
+                            <ComboBox fx:id="searchTypeCombo" prefWidth="155" style="-fx-background-color: #f8f8f8;"/>
+                            <TextField fx:id="searchField" promptText="Enter search value" prefWidth="240" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                            <Button text="Search" onAction="#doSearch" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Show All" onAction="#doShow" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                        </HBox>
+                        <Label fx:id="searchMessageLabel" style="-fx-text-fill: #555555; -fx-font-weight: bold;"/>
+                        <Label fx:id="productCountLabel" text="Total Products: 0" style="-fx-text-fill: #888888; -fx-font-weight: bold;"/>
+                        <TableView fx:id="productTable" prefHeight="330">
+                            <columns>
+                                <TableColumn fx:id="idColumn" text="ID" prefWidth="70"/>
+                                <TableColumn fx:id="nameColumn" text="Product Name" prefWidth="240"/>
+                                <TableColumn fx:id="modelColumn" text="Model" prefWidth="150"/>
+                                <TableColumn fx:id="priceColumn" text="Price" prefWidth="100"/>
+                                <TableColumn fx:id="categoryColumn" text="Category" prefWidth="130"/>
+                                <TableColumn fx:id="brandColumn" text="Brand" prefWidth="130"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="18">
+                    <VBox spacing="10" prefWidth="330" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 20; -fx-border-color: #dddddd; -fx-border-radius: 14; -fx-border-width: 0.5;">
+                        <HBox alignment="CENTER"><Label text="Category and Brand" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                        <Label text="Category Name" style="-fx-text-fill: #555555;"/>
+                        <TextField fx:id="categoryNameField" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Label text="Unit Size" style="-fx-text-fill: #555555;"/>
+                        <TextField fx:id="categoryUnitSizeField" promptText="space used per item" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Button text="Add Category" onAction="#addCategory" prefWidth="280" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                        <Button text="Show Categories" onAction="#showCategories" prefWidth="280" style="-fx-background-color: #e8e8e8; -fx-text-fill: #555555; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                        <TextArea fx:id="categoryInfoArea" VBox.vgrow="ALWAYS" prefHeight="120" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Separator/>
+                        <Label text="Brand Name" style="-fx-text-fill: #555555;"/>
+                        <TextField fx:id="brandNameField" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Label text="Brand Website" style="-fx-text-fill: #555555;"/>
+                        <TextField fx:id="brandWebsiteField" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Button text="Add Brand" onAction="#addBrand" prefWidth="280" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                        <Button text="Show Brands" onAction="#showBrands" prefWidth="280" style="-fx-background-color: #e8e8e8; -fx-text-fill: #555555; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                        <TextArea fx:id="brandInfoArea" VBox.vgrow="ALWAYS" prefHeight="120" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Label fx:id="catBrandMessageLabel" style="-fx-text-fill: #555555; -fx-font-weight: bold;"/>
+                    </VBox>
+
+                    <VBox spacing="18" HBox.hgrow="ALWAYS">
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 20; -fx-border-color: #dddddd; -fx-border-radius: 14; -fx-border-width: 0.5;">
+                            <HBox alignment="CENTER"><Label text="Product Suppliers" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                            <HBox spacing="10">
+                                <TextField fx:id="supplierSearchField" promptText="Search by product name" prefWidth="250" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                <Button text="Search Supplier" onAction="#searchProductSuppliers" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                                <Button text="Show All" onAction="#showProductSuppliers" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            </HBox>
+                            <Label fx:id="supplierMessageLabel" style="-fx-text-fill: #555555; -fx-font-weight: bold;"/>
+                            <TableView fx:id="supplierProductTable" prefHeight="200">
+                                <columns>
+                                    <TableColumn fx:id="spProductNameColumn" text="Product Name" prefWidth="220"/>
+                                    <TableColumn fx:id="spSupplierNameColumn" text="Supplier Name" prefWidth="200"/>
+                                    <TableColumn fx:id="spPriceColumn" text="Supply Price" prefWidth="130"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 20; -fx-border-color: #dddddd; -fx-border-radius: 14; -fx-border-width: 0.5;">
+                            <HBox alignment="CENTER"><Label text="Product Information" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #222222;"/></HBox>
+                            <Button text="Products per Category" onAction="#showProductsPerCategory" prefWidth="250" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Average Price per Category" onAction="#showAvgPricePerCategory" prefWidth="250" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Button text="Most Expensive per Brand" onAction="#showMostExpensivePerBrand" prefWidth="250" style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                            <Label fx:id="p_infoMessageLabel" style="-fx-text-fill: #555555; -fx-font-weight: bold;"/>
+                            <TextArea fx:id="p_infoArea" prefHeight="150" style="-fx-background-color: #f8f8f8; -fx-border-color: #dddddd; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        </VBox>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
